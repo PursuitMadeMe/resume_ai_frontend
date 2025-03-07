@@ -2,11 +2,21 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import ResumeForm from './components/ResumeForm'
 
 function App() {
+
+  const [resume, setResume] = useState(null); // ✅ Define state properly
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-600">TailwindCSS is Working! 🎉</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
+      <ResumeForm onGenerate={setResume} />
+      {resume && (
+        <div className="mt-6 max-w-2xl bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-xl font-bold mb-2">Generated Resume</h3>
+          <pre className="whitespace-pre-wrap text-gray-800">{JSON.stringify(resume, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 }
