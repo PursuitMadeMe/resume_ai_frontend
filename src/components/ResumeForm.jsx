@@ -27,7 +27,7 @@ const ResumeForm = ({ onGenerate }) => {
       }
 
       const data = await response.json();
-      onGenerate(data); // Pass resume data to App.jsx
+      onGenerate(data.resume || JSON.stringify(data, null, 2));  // Pass resume data to App.jsx
     } catch (error) {
       console.error("Error generating resume:", error);
     }
