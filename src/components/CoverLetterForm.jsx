@@ -36,8 +36,14 @@ function CoverLetterForm() {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md border mt-6">
-      <h2 className="text-2xl font-bold text-gray-700 mb-4">Generate Your Cover Letter</h2>
+<div className="max-w-xl bg-white bg-opacity-80 p-6 rounded-xl shadow-lg backdrop-blur-lg border border-gray-200">
+<h2 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">
+  Generate Your Cover Letter
+</h2>
+<p className="text-gray-600 text-lg mb-6">
+  Provide your details below to generate a personalized cover letter.
+</p>
+
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Applicant Name Input */}
@@ -48,7 +54,7 @@ function CoverLetterForm() {
             name="applicantName"
             value={applicantName}
             onChange={(e) => setApplicantName(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             required
           />
         </div>
@@ -61,7 +67,7 @@ function CoverLetterForm() {
             name="jobTitle"
             value={jobTitle}
             onChange={(e) => setJobTitle(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             required
           />
         </div>
@@ -74,7 +80,7 @@ function CoverLetterForm() {
             name="companyName"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             required
           />
         </div>
@@ -82,7 +88,7 @@ function CoverLetterForm() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-blue-900 shadow-lg"
           disabled={loading}
         >
           {loading ? "Generating..." : "Generate Cover Letter"}

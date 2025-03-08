@@ -43,3 +43,39 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+
+
+
+/* Default settings (for large screens) */
+.container {
+  width: 60%;
+  max-width: 800px;
+}
+
+/* Medium Screens (Tablets) */
+@media (max-width: 1024px) {
+  .container {
+    width: 80%;
+    max-width: 700px;
+  }
+}
+
+/* Small Screens (Phones) */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    max-width: 600px;
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+    max-width: 100%;
+    padding: 10px;
+  }
+}

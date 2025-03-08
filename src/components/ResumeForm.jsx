@@ -36,59 +36,64 @@ const ResumeForm = ({ onGenerate }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-700 mb-4">
-        Generate Your Resume
-      </h2>
+<div className="max-w-2xl bg-white p-6 rounded-lg shadow-md mt-6">
+<h2 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">
+  Generate Your Resume
+</h2>
+<p className="text-gray-600 text-lg mb-6">
+  Enter your job details below to create a professional resume.
+</p>
+
+
       <form onSubmit={handleSubmit} className="space-y-4">
       {/* ✅ Name Input */}
       <div>
-          <label className="block text-gray-600 text-sm">Your Name</label>
+          <label className="block text-gray-700 font-medium text-md mb-2">Your Name</label>
           <input
             type="text"
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-600 text-sm">Job Title</label>
+          <label className="block text-gray-700 font-medium text-md mb-2">Job Title</label>
           <input
             type="text"
             // autoComplete="off"  // ✅ Prevents browser autofill from misinterpreting the field
             value={jobTitle}
             onChange={(e) => setJobTitle(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-600 text-sm">
+          <label className="block text-gray-700 font-medium text-md mb-2block text-gray-600 text-sm">
             Years of Experience
           </label>
           <input
             type="number"
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-600 text-sm">Key Skills</label>
+          <label className="block text-gray-700 font-medium text-md mb-2block text-gray-600 text-sm">Key Skills</label>
           <input
             type="text"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
             placeholder="E.g., JavaScript, React, Agile"
           />
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+          className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-blue-900 shadow-lg"
           disabled={loading}
         >
           {loading ? "Generating..." : "Generate Resume"}
