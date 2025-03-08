@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const ResumeForm = ({ onGenerate }) => {
+  const [name, setName] = useState(""); // ✅ New state for name
   const [jobTitle, setJobTitle] = useState("");
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
@@ -11,7 +12,7 @@ const ResumeForm = ({ onGenerate }) => {
     setLoading(true);
 
     const requestData = {
-      prompt: `Generate a resume for a ${jobTitle} with ${experience} years of experience, skilled in ${skills}.`,
+      prompt: `Generate a resume for a ${name} ${jobTitle} with ${experience} years of experience, skilled in ${skills}.`,
     };
 
     try {
@@ -36,8 +37,22 @@ const ResumeForm = ({ onGenerate }) => {
 
   return (
     <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-700 mb-4">Generate Your Resume</h2>
+      <h2 className="text-2xl font-bold text-gray-700 mb-4">
+        Generate Your Resume
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+      {/* ✅ Name Input */}
+      <div>
+          <label className="block text-gray-600 text-sm">Your Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
+            required
+          />
+        </div>
         <div>
           <label className="block text-gray-600 text-sm">Job Title</label>
           <input
@@ -45,17 +60,19 @@ const ResumeForm = ({ onGenerate }) => {
             // autoComplete="off"  // ✅ Prevents browser autofill from misinterpreting the field
             value={jobTitle}
             onChange={(e) => setJobTitle(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-600 text-sm">Years of Experience</label>
+          <label className="block text-gray-600 text-sm">
+            Years of Experience
+          </label>
           <input
             type="number"
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
             required
           />
         </div>
@@ -65,7 +82,7 @@ const ResumeForm = ({ onGenerate }) => {
             type="text"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 text-gray-900"
             placeholder="E.g., JavaScript, React, Agile"
           />
         </div>
