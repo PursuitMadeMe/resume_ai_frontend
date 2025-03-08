@@ -13,17 +13,20 @@ function CoverLetterForm() {
     setLoading(true); // Show loading state
 
     try {
-      const response = await fetch("http://localhost:9000/ai/generate-cover-letter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          job_title: jobTitle,
-          company: companyName,
-          applicant_name: applicantName,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:9000/ai/generate-cover-letter",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            job_title: jobTitle,
+            company: companyName,
+            applicant_name: applicantName,
+          }),
+        }
+      );
 
       const data = await response.json();
       setCoverLetter(data.cover_letter);
@@ -36,14 +39,13 @@ function CoverLetterForm() {
   };
 
   return (
-<div className="max-w-xl bg-white bg-opacity-80 p-6 rounded-xl shadow-lg backdrop-blur-lg border border-gray-200">
-<h2 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">
-  Generate Your Cover Letter
-</h2>
-<p className="text-gray-600 text-lg mb-6">
-  Provide your details below to generate a personalized cover letter.
-</p>
-
+    <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md mt-6">
+      <h2 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">
+        Generate Your Cover Letter
+      </h2>
+      <p className="text-gray-600 text-lg mb-6">
+        Provide your details below to generate a personalized cover letter.
+      </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Applicant Name Input */}
@@ -99,7 +101,9 @@ function CoverLetterForm() {
       {coverLetter && (
         <div className="mt-6 p-4 bg-gray-100 border rounded-md">
           <h3 className="text-lg font-bold">Generated Cover Letter</h3>
-          <pre className="whitespace-pre-wrap text-gray-800 mt-2">{coverLetter}</pre>
+          <pre className="whitespace-pre-wrap text-gray-800 mt-2">
+            {coverLetter}
+          </pre>
         </div>
       )}
     </div>

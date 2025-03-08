@@ -3,7 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 🎨 Background Animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
+body {
+  @apply bg-black text-white;
+  background: linear-gradient(-45deg, #1a1a1a, #222, #333, #444);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s infinite;
+}
+
+/* @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-bg {
+    background: linear-gradient(-45deg, #1e3a8a, #6d28d9, #9333ea, #3b82f6);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+} */
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

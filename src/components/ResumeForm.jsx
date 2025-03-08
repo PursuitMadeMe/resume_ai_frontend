@@ -36,19 +36,20 @@ const ResumeForm = ({ onGenerate }) => {
   };
 
   return (
-<div className="max-w-2xl bg-white p-6 rounded-lg shadow-md mt-6">
-<h2 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">
-  Generate Your Resume
-</h2>
-<p className="text-gray-600 text-lg mb-6">
-  Enter your job details below to create a professional resume.
-</p>
-
+    <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md mt-6">
+      <h2 className="text-3xl font-extrabold text-gray-800 mb-4 tracking-tight">
+        Generate Your Resume
+      </h2>
+      <p className="text-gray-600 text-lg mb-6">
+        Enter your job details below to create a professional resume.
+      </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-      {/* ✅ Name Input */}
-      <div>
-          <label className="block text-gray-700 font-medium text-md mb-2">Your Name</label>
+        {/* ✅ Name Input */}
+        <div>
+          <label className="block text-gray-700 font-medium text-md mb-2">
+            Your Name
+          </label>
           <input
             type="text"
             name="name"
@@ -59,7 +60,9 @@ const ResumeForm = ({ onGenerate }) => {
           />
         </div>
         <div>
-          <label className="block text-gray-700 font-medium text-md mb-2">Job Title</label>
+          <label className="block text-gray-700 font-medium text-md mb-2">
+            Job Title
+          </label>
           <input
             type="text"
             // autoComplete="off"  // ✅ Prevents browser autofill from misinterpreting the field
@@ -82,7 +85,9 @@ const ResumeForm = ({ onGenerate }) => {
           />
         </div>
         <div>
-          <label className="block text-gray-700 font-medium text-md mb-2block text-gray-600 text-sm">Key Skills</label>
+          <label className="block text-gray-700 font-medium text-md mb-2block text-gray-600 text-sm">
+            Key Skills
+          </label>
           <input
             type="text"
             value={skills}
