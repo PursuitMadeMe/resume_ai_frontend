@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const ResumeForm = ({ onGenerate }) => {
+const ResumeForm = ({ onGenerate, resetTrigger }) => {
   const [name, setName] = useState(""); // ✅ New state for name
   const [jobTitle, setJobTitle] = useState("");
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [loading, setLoading] = useState(false);
+
+ // ✅ Reset state when resetTrigger changes
+ useEffect(() => {
+  if (resetTrigger) {
+    setName("");
+    setJobTitle("");
+    setExperience("");
+    setSkills("");
+  }
+}, [resetTrigger]); // Runs ONLY when resetTrigger updates
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

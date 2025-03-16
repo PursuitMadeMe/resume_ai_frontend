@@ -106,17 +106,6 @@ function CoverLetterForm({ onGenerate }) {
           {loading ? "Generating..." : "Generate Cover Letter"}
         </button>
       </form>
-
-      {/* Display Cover Letter */}
-
-      {/* {coverLetter && (
-        <div className="mt-6 p-4 bg-gray-100 border rounded-md">
-          <h3 className="text-lg font-bold">Generated Cover Letter</h3>
-          <pre className="whitespace-pre-wrap text-gray-800 mt-2">
-            {coverLetter}
-          </pre>
-        </div>
-      )} */}
     </div>
   );
 }

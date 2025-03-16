@@ -7,18 +7,25 @@ function App() {
   const [resume, setResume] = useState(null);
   const [coverLetter, setCoverLetter] = useState(null);
   const [showResumeForm, setShowResumeForm] = useState(true); // ✅ NEW TOGGLE STATE
+  const [resetForm, setResetForm] = useState(false); // ✅ NEW RESET STATE
+
 
   const handleRestart = () => {
     setResume(null);
     setCoverLetter(null);
-    setShowResumeForm(true); // Reset to default view with Resume Form
+    setShowResumeForm(true);
+    
+    // ✅ Reset form, then turn off trigger to avoid infinite re-renders
+    setResetForm(true);
+    setTimeout(() => setResetForm(false), 50); 
   };
+  
 
   return (
     // ✅ Apply the background image to the entire page
     <div
       className="relative min-h-screen w-full flex flex-col items-center justify-start bg-cover bg-center px-4 md:px-8 pt-32"
-      style={{
+      style={{ 
         backgroundImage: "url('/images/resumeAI.webp')",
         backgroundSize: "cover",
         backgroundPosition: "top",
@@ -64,23 +71,21 @@ function App() {
         {/* ✅ Show Resume Form If Selected */}
         {showResumeForm && (
           <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-            <ResumeForm onGenerate={setResume} />
+            <ResumeForm onGenerate={setResume} resetTrigger={resetForm}/>
           </div>
         )}
 
         {/* ✅ Show Cover Letter Form If Selected */}
         {!showResumeForm && (
           <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-            <CoverLetterForm onGenerate={setCoverLetter} />
+            <CoverLetterForm onGenerate={setCoverLetter} resetTrigger={resetForm}/>
           </div>
         )}
 
         {/* 📄 Display Generated Resume */}
         {resume && (
           <div className="mt-6 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10 text-white">
-          <h3 className="text-xl font-bold mb-2">
-              Generated Resume
-            </h3>
+            <h3 className="text-xl font-bold mb-2">Generated Resume</h3>
             <pre className="whitespace-pre-wrap">
               {typeof resume === "string"
                 ? resume
@@ -99,9 +104,7 @@ function App() {
         {/* 📄 Display Generated Cover Letter */}
         {coverLetter && (
           <div className="mt-6 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10 text-white">
-          <h3 className="text-xl font-bold mb-2">
-              Generated Cover Letter
-            </h3>
+            <h3 className="text-xl font-bold mb-2">Generated Cover Letter</h3>
             <pre className="whitespace-pre-wrap">
               {typeof coverLetter === "string"
                 ? coverLetter
