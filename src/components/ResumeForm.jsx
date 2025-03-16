@@ -96,6 +96,7 @@ const ResumeForm = ({ onGenerate }) => {
             placeholder="E.g., JavaScript, React, Agile"
           />
         </div>
+        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-blue-900 shadow-lg"

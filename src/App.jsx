@@ -8,6 +8,12 @@ function App() {
   const [coverLetter, setCoverLetter] = useState(null);
   const [showResumeForm, setShowResumeForm] = useState(true); // ✅ NEW TOGGLE STATE
 
+  const handleRestart = () => {
+    setResume(null);
+    setCoverLetter(null);
+    setShowResumeForm(true); // Reset to default view with Resume Form
+  };
+
   return (
     // ✅ Apply the background image to the entire page
     <div
@@ -36,7 +42,9 @@ function App() {
           <button
             onClick={() => setShowResumeForm(true)}
             className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-              showResumeForm ? "bg-blue-600 text-white" : "bg-white/20 text-gray-200"
+              showResumeForm
+                ? "bg-blue-600 text-white"
+                : "bg-white/20 text-gray-200"
             }`}
           >
             Show Resume Form
@@ -44,7 +52,9 @@ function App() {
           <button
             onClick={() => setShowResumeForm(false)}
             className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-              !showResumeForm ? "bg-blue-600 text-white" : "bg-white/20 text-gray-200"
+              !showResumeForm
+                ? "bg-blue-600 text-white"
+                : "bg-white/20 text-gray-200"
             }`}
           >
             Show Cover Letter Form
@@ -67,21 +77,43 @@ function App() {
 
         {/* 📄 Display Generated Resume */}
         {resume && (
-          <div className="mt-6 w-full max-w-3xl bg-white p-4 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-2 text-gray-900">Generated Resume</h3>
-            <pre className="whitespace-pre-wrap text-gray-900">
-              {typeof resume === "string" ? resume : JSON.stringify(resume, null, 2)}
+          <div className="mt-6 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10 text-white">
+          <h3 className="text-xl font-bold mb-2">
+              Generated Resume
+            </h3>
+            <pre className="whitespace-pre-wrap">
+              {typeof resume === "string"
+                ? resume
+                : JSON.stringify(resume, null, 2)}
             </pre>
+            {/* ✅ Reset & Restart Button */}
+            <button
+              onClick={handleRestart}
+              className="mt-4 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-700 transition"
+            >
+              Restart
+            </button>
           </div>
         )}
 
         {/* 📄 Display Generated Cover Letter */}
         {coverLetter && (
-          <div className="mt-6 w-full max-w-3xl bg-white p-4 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-2 text-gray-900">Generated Cover Letter</h3>
-            <pre className="whitespace-pre-wrap text-gray-900">
-              {typeof coverLetter === "string" ? coverLetter : JSON.stringify(coverLetter, null, 2)}
+          <div className="mt-6 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10 text-white">
+          <h3 className="text-xl font-bold mb-2">
+              Generated Cover Letter
+            </h3>
+            <pre className="whitespace-pre-wrap">
+              {typeof coverLetter === "string"
+                ? coverLetter
+                : JSON.stringify(coverLetter, null, 2)}
             </pre>
+            {/* ✅ Reset & Restart Button */}
+            <button
+              onClick={handleRestart}
+              className="mt-4 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-700 transition"
+            >
+              Restart
+            </button>
           </div>
         )}
       </div>
