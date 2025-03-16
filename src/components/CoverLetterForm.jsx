@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_BASE_URL from "../config";
 
 function CoverLetterForm({ onGenerate }) {
   const [jobTitle, setJobTitle] = useState("");
@@ -20,7 +21,7 @@ function CoverLetterForm({ onGenerate }) {
 
     try {
       const response = await fetch(
-        "http://localhost:9000/ai/generate-cover-letter",
+        `${API_BASE_URL}/ai/generate-cover-letter`,
         {
           method: "POST",
           headers: {

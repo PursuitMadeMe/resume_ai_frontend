@@ -8,24 +8,33 @@ function App() {
   const [coverLetter, setCoverLetter] = useState(null);
   const [showResumeForm, setShowResumeForm] = useState(true); // ✅ NEW TOGGLE STATE
   const [resetForm, setResetForm] = useState(false); // ✅ NEW RESET STATE
+  const [showForm, setShowForm] = useState(true); // ✅ Controls whether the form is displayed or hidden
 
+  const handleGenerateResume = (generatedResume) => {
+    setResume(generatedResume); // ✅ Store the generated resume
+    setShowForm(false); // ✅ Hide the form after generating
+  };
+
+  const handleGenerateCoverLetter = (generatedCoverLetter) => {
+    setCoverLetter(generatedCoverLetter); // ✅ Store the generated cover letter
+    setShowForm(false); // ✅ Hide the form after generating
+  };
 
   const handleRestart = () => {
     setResume(null);
     setCoverLetter(null);
     setShowResumeForm(true);
-    
+
     // ✅ Reset form, then turn off trigger to avoid infinite re-renders
     setResetForm(true);
-    setTimeout(() => setResetForm(false), 50); 
+    setTimeout(() => setResetForm(false), 50);
   };
-  
 
   return (
     // ✅ Apply the background image to the entire page
     <div
       className="relative min-h-screen w-full flex flex-col items-center justify-start bg-cover bg-center px-4 md:px-8 pt-32"
-      style={{ 
+      style={{
         backgroundImage: "url('/images/resumeAI.webp')",
         backgroundSize: "cover",
         backgroundPosition: "top",
@@ -69,16 +78,22 @@ function App() {
         </div>
 
         {/* ✅ Show Resume Form If Selected */}
-        {showResumeForm && (
+        {showForm && showResumeForm && (
           <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-            <ResumeForm onGenerate={setResume} resetTrigger={resetForm}/>
+            <ResumeForm
+              onGenerate={handleGenerateResume}
+              resetTrigger={resetForm}
+            />
           </div>
         )}
 
         {/* ✅ Show Cover Letter Form If Selected */}
-        {!showResumeForm && (
+        {showForm && !showResumeForm && (
           <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-            <CoverLetterForm onGenerate={setCoverLetter} resetTrigger={resetForm}/>
+            <CoverLetterForm
+              onGenerate={handleGenerateCoverLetter}
+              resetTrigger={resetForm}
+            />
           </div>
         )}
 
@@ -93,7 +108,10 @@ function App() {
             </pre>
             {/* ✅ Reset & Restart Button */}
             <button
-              onClick={handleRestart}
+              onClick={() => {
+                handleRestart(); // ✅ Clears generated resume/cover letter
+                setShowForm(true); // ✅ Shows the form again after clicking "Restart"
+              }}
               className="mt-4 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-700 transition"
             >
               Restart
@@ -112,7 +130,10 @@ function App() {
             </pre>
             {/* ✅ Reset & Restart Button */}
             <button
-              onClick={handleRestart}
+              onClick={() => {
+                handleRestart(); // ✅ Clears generated resume/cover letter
+                setShowForm(true); // ✅ Shows the form again after clicking "Restart"
+              }}
               className="mt-4 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-700 transition"
             >
               Restart

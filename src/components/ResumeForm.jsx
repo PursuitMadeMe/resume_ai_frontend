@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_BASE_URL from "../config";
 
 const ResumeForm = ({ onGenerate, resetTrigger }) => {
   const [name, setName] = useState(""); // ✅ New state for name
@@ -28,7 +29,7 @@ const ResumeForm = ({ onGenerate, resetTrigger }) => {
     };
 
     try {
-      const response = await fetch("http://localhost:9000/ai/generate-resume", {
+      const response = await fetch(`${API_BASE_URL}/ai/generate-resume`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
