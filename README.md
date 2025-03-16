@@ -1,12 +1,23 @@
-# React + Vite
+# Resume AI - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Overview
+This is the **frontend** for Resume AI, a web app that helps users generate resumes and cover letters using AI. It is built with **React (Vite)** and styled with **Tailwind CSS**.
 
-Currently, two official plugins are available:
+## 🛠️ Technologies Used
+- **React (Vite)** – Fast frontend framework
+- **Tailwind CSS** – Styling for modern UI
+- **Vercel / Netlify** – Deployment platforms
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🔧 Installation & Setup (Local Development)
+1️⃣ **Clone the Repository**
+Open your terminal and run:
+git clone https://github.com/PursuitMadeMe/resume_ai_frontend
+cd resume_ai_frontend
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2️⃣ Install Dependencies
+npm install
+
+3️⃣ Start the Development Server
+npm run dev
