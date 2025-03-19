@@ -20,6 +20,14 @@ function App() {
     setShowForm(false); // ✅ Hide the form after generating
   };
 
+  const copyToClipboard = (text) => {
+    if (!text) return; // Prevents copying empty content
+    navigator.clipboard
+      .writeText(text)
+      .then(() => alert("Copied to clipboard!"))
+      .catch((err) => console.error("Failed to copy:", err));
+  };
+
   const handleRestart = () => {
     setResume(null);
     setCoverLetter(null);
@@ -53,52 +61,51 @@ function App() {
           AI Resume & Cover Letter Generator
         </h1>
 
-{/* ✅ Center Everything on Page */}
-<div className="flex flex-col items-center justify-center min-h-screen w-full">
-
-        {/* ✅ Toggle Button for Forms */}
-        <div className="flex space-x-4 mt-4 mb-6">
-          <button
-            onClick={() => setShowResumeForm(true)}
-            className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-              showResumeForm
-                ? "bg-blue-600 text-white"
-                : "bg-white/20 text-gray-200"
-            }`}
-          >
-            Show Resume Form
-          </button>
-          <button
-            onClick={() => setShowResumeForm(false)}
-            className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-              !showResumeForm
-                ? "bg-blue-600 text-white"
-                : "bg-white/20 text-gray-200"
-            }`}
-          >
-            Show Cover Letter Form
-          </button>
-        </div>
-
-        {/* ✅ Show Resume Form If Selected */}
-        {showForm && showResumeForm && (
-          <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-            <ResumeForm
-              onGenerate={handleGenerateResume}
-              resetTrigger={resetForm}
-            />
+        {/* ✅ Center Everything on Page */}
+        <div className="flex flex-col items-center justify-center min-h-screen w-full">
+          {/* ✅ Toggle Button for Forms */}
+          <div className="flex space-x-4 mt-4 mb-6">
+            <button
+              onClick={() => setShowResumeForm(true)}
+              className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
+                showResumeForm
+                  ? "bg-blue-600 text-white"
+                  : "bg-white/20 text-gray-200"
+              }`}
+            >
+              Show Resume Form
+            </button>
+            <button
+              onClick={() => setShowResumeForm(false)}
+              className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
+                !showResumeForm
+                  ? "bg-blue-600 text-white"
+                  : "bg-white/20 text-gray-200"
+              }`}
+            >
+              Show Cover Letter Form
+            </button>
           </div>
-        )}
 
-        {/* ✅ Show Cover Letter Form If Selected */}
-        {showForm && !showResumeForm && (
-          <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-            <CoverLetterForm
-              onGenerate={handleGenerateCoverLetter}
-              resetTrigger={resetForm}
-            />
-          </div>
-        )}
+          {/* ✅ Show Resume Form If Selected */}
+          {showForm && showResumeForm && (
+            <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
+              <ResumeForm
+                onGenerate={handleGenerateResume}
+                resetTrigger={resetForm}
+              />
+            </div>
+          )}
+
+          {/* ✅ Show Cover Letter Form If Selected */}
+          {showForm && !showResumeForm && (
+            <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
+              <CoverLetterForm
+                onGenerate={handleGenerateCoverLetter}
+                resetTrigger={resetForm}
+              />
+            </div>
+          )}
         </div>
 
         {/* 📄 Display Generated Resume */}
@@ -110,6 +117,13 @@ function App() {
                 ? resume
                 : JSON.stringify(resume, null, 2)}
             </pre>
+            {/* ✅ Copy to Clipboard Button */}
+            <button
+              onClick={() => copyToClipboard(resume)}
+              className="mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all"
+            >
+              Copy to Clipboard
+            </button>
             {/* ✅ Reset & Restart Button */}
             <button
               onClick={() => {
@@ -132,6 +146,13 @@ function App() {
                 ? coverLetter
                 : JSON.stringify(coverLetter, null, 2)}
             </pre>
+            {/* ✅ Copy to Clipboard Button */}
+            <button
+              onClick={() => copyToClipboard(coverLetter)}
+              className="mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all"
+            >
+              Copy to Clipboard
+            </button>
             {/* ✅ Reset & Restart Button */}
             <button
               onClick={() => {
