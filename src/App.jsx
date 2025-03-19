@@ -53,6 +53,9 @@ function App() {
           AI Resume & Cover Letter Generator
         </h1>
 
+{/* ✅ Center Everything on Page */}
+<div className="flex flex-col items-center justify-center min-h-screen w-full">
+
         {/* ✅ Toggle Button for Forms */}
         <div className="flex space-x-4 mt-4 mb-6">
           <button
@@ -96,6 +99,7 @@ function App() {
             />
           </div>
         )}
+        </div>
 
         {/* 📄 Display Generated Resume */}
         {resume && (
