@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { jsPDF } from "jspdf";
 import "./App.css";
 import ResumeForm from "./components/ResumeForm";
 import CoverLetterForm from "./components/CoverLetterForm";
@@ -36,6 +37,16 @@ function App() {
     // ✅ Reset form, then turn off trigger to avoid infinite re-renders
     setResetForm(true);
     setTimeout(() => setResetForm(false), 50);
+  };
+
+  const downloadPDF = (text, filename) => {
+    if (!text) return; // Prevent downloading empty content
+
+    const doc = new jsPDF();
+    doc.setFont("helvetica", "normal");
+    doc.text(text, 10, 10, { maxWidth: 180 }); // Format text inside the PDF
+
+    doc.save(`${filename}.pdf`); // Save with dynamic filename
   };
 
   return (
@@ -124,6 +135,13 @@ function App() {
             >
               Copy to Clipboard
             </button>
+            {/* ✅ Download PDF Button */}
+            <button
+              onClick={() => downloadPDF(resume, "Resume")}
+              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition-all"
+            >
+              Download as PDF
+            </button>
             {/* ✅ Reset & Restart Button */}
             <button
               onClick={() => {
@@ -153,6 +171,14 @@ function App() {
             >
               Copy to Clipboard
             </button>
+            {/* ✅ Download PDF Button */}
+            <button
+              onClick={() => downloadPDF(coverLetter, "Cover_Letter")}
+              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition-all"
+            >
+              Download as PDF
+            </button>
+
             {/* ✅ Reset & Restart Button */}
             <button
               onClick={() => {
