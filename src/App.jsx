@@ -7,22 +7,34 @@ import CoverLetterForm from "./components/CoverLetterForm";
 function App() {
   const [resume, setResume] = useState(null);
   const [coverLetter, setCoverLetter] = useState(null);
-  const [showResumeForm, setShowResumeForm] = useState(true); // ✅ NEW TOGGLE STATE
-  const [resetForm, setResetForm] = useState(false); // ✅ NEW RESET STATE
-  const [showForm, setShowForm] = useState(true); // ✅ Controls whether the form is displayed or hidden
+  const [showResumeForm, setShowResumeForm] = useState(true);
+  const [resetForm, setResetForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
 
   const handleGenerateResume = (generatedResume) => {
-    setResume(generatedResume); // ✅ Store the generated resume
-    setShowForm(false); // ✅ Hide the form after generating
+    setResume(generatedResume);
+    setShowForm(false);
+
+    setTimeout(() => {
+      document
+        .getElementById("resumeSection")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }, 300);
   };
 
   const handleGenerateCoverLetter = (generatedCoverLetter) => {
-    setCoverLetter(generatedCoverLetter); // ✅ Store the generated cover letter
-    setShowForm(false); // ✅ Hide the form after generating
+    setCoverLetter(generatedCoverLetter);
+    setShowForm(false);
+
+    setTimeout(() => {
+      document
+        .getElementById("coverLetterSection")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }, 300);
   };
 
   const copyToClipboard = (text) => {
-    if (!text) return; // Prevents copying empty content
+    if (!text) return;
     navigator.clipboard
       .writeText(text)
       .then(() => alert("Copied to clipboard!"))
@@ -33,26 +45,22 @@ function App() {
     setResume(null);
     setCoverLetter(null);
     setShowResumeForm(true);
-
-    // ✅ Reset form, then turn off trigger to avoid infinite re-renders
     setResetForm(true);
     setTimeout(() => setResetForm(false), 50);
+    setShowForm(true);
   };
 
   const downloadPDF = (text, filename) => {
-    if (!text) return; // Prevent downloading empty content
-
+    if (!text) return;
     const doc = new jsPDF();
     doc.setFont("helvetica", "normal");
-    doc.text(text, 10, 10, { maxWidth: 180 }); // Format text inside the PDF
-
-    doc.save(`${filename}.pdf`); // Save with dynamic filename
+    doc.text(text, 10, 10, { maxWidth: 180 });
+    doc.save(`${filename}.pdf`);
   };
 
   return (
-    // ✅ Apply the background image to the entire page
     <div
-      className="relative min-h-screen w-full flex flex-col items-center justify-start bg-cover bg-center px-4 md:px-8 pt-32"
+      className="relative min-h-screen w-full flex flex-col items-center justify-between bg-cover bg-center px-4 md:px-8 pt-32"
       style={{
         backgroundImage: "url('/images/resumeAI.webp')",
         backgroundSize: "cover",
@@ -62,135 +70,119 @@ function App() {
         width: "100vw",
       }}
     >
-      {/* ✅ Dark overlay for better readability */}
+      {/* Dark overlay for better readability */}
       <div className="absolute inset-0 bg-black/50"></div>
 
-      {/* ✅ Content Wrapper to ensure everything is above the background */}
-      <div className="relative z-10 w-full max-w-4xl text-white">
-        {/* 🎨 Animated Heading */}
-        <h1 className="text-3xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse mt-24 mb-10 relative z-50">
+      {/* Content Wrapper */}
+      <div className="relative z-10 w-full max-w-4xl text-white flex flex-col min-h-screen justify-between items-center">
+        {/* Animated Heading */}
+        <h1 className="text-4xl md:text-6xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse mt-12 mb-10">
           AI Resume & Cover Letter Generator
         </h1>
 
-        {/* ✅ Center Everything on Page */}
-        <div className="flex flex-col items-center justify-center min-h-screen w-full">
-          {/* ✅ Toggle Button for Forms */}
-          {/* ✅ Hide toggle buttons after generation */}
-          {!resume && !coverLetter && (
-            <div className="flex space-x-4 mt-4 mb-6">
-              <button
-                onClick={() => setShowResumeForm(true)}
-                className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-                  showResumeForm
-                    ? "bg-blue-600 text-white"
-                    : "bg-white/20 text-gray-200"
-                }`}
-              >
-                Show Resume Form
-              </button>
-              <button
-                onClick={() => setShowResumeForm(false)}
-                className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-                  !showResumeForm
-                    ? "bg-blue-600 text-white"
-                    : "bg-white/20 text-gray-200"
-                }`}
-              >
-                Show Cover Letter Form
-              </button>
-            </div>
-          )}
-
-          {/* ✅ Show Resume Form If Selected */}
-          {showForm && showResumeForm && (
-            <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-              <ResumeForm
-                onGenerate={handleGenerateResume}
-                resetTrigger={resetForm}
-              />
-            </div>
-          )}
-
-          {/* ✅ Show Cover Letter Form If Selected */}
-          {showForm && !showResumeForm && (
-            <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10">
-              <CoverLetterForm
-                onGenerate={handleGenerateCoverLetter}
-                resetTrigger={resetForm}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* 📄 Display Generated Resume */}
-        {resume && (
-          <div className="mt-6 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10 text-white">
-            <h3 className="text-xl font-bold mb-2">Generated Resume</h3>
-            <pre className="whitespace-pre-wrap">
-              {typeof resume === "string"
-                ? resume
-                : JSON.stringify(resume, null, 2)}
-            </pre>
-            {/* ✅ Copy to Clipboard Button */}
+        {/* Show Toggle Buttons Only If Nothing is Generated */}
+        {!resume && !coverLetter && (
+          <div className="flex justify-center space-x-4 mt-6 mb-10">
             <button
-              onClick={() => copyToClipboard(resume)}
-              className="mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all"
+              onClick={() => setShowResumeForm(true)}
+              className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
+                showResumeForm
+                  ? "bg-blue-600 text-white"
+                  : "bg-white/20 text-gray-200"
+              }`}
             >
-              Copy to Clipboard
+              Show Resume Form
             </button>
-            {/* ✅ Download PDF Button */}
             <button
-              onClick={() => downloadPDF(resume, "Resume")}
-              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition-all"
+              onClick={() => setShowResumeForm(false)}
+              className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
+                !showResumeForm
+                  ? "bg-blue-600 text-white"
+                  : "bg-white/20 text-gray-200"
+              }`}
             >
-              Download as PDF
-            </button>
-            {/* ✅ Reset & Restart Button */}
-            <button
-              onClick={() => {
-                handleRestart(); // ✅ Clears generated resume/cover letter
-                setShowForm(true); // ✅ Shows the form again after clicking "Restart"
-              }}
-              className="mt-4 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-700 transition"
-            >
-              Restart
+              Show Cover Letter Form
             </button>
           </div>
         )}
 
-        {/* 📄 Display Generated Cover Letter */}
-        {coverLetter && (
-          <div className="mt-6 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-4 rounded-lg shadow-md border border-white/10 text-white">
-            <h3 className="text-xl font-bold mb-2">Generated Cover Letter</h3>
-            <pre className="whitespace-pre-wrap">
-              {typeof coverLetter === "string"
-                ? coverLetter
-                : JSON.stringify(coverLetter, null, 2)}
+        {/* Display Forms Based on Selection */}
+        {showForm && showResumeForm && (
+          <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-6 rounded-lg shadow-md border border-white/10 flex flex-col justify-center items-center">
+            <ResumeForm
+              onGenerate={handleGenerateResume}
+              resetTrigger={resetForm}
+            />
+          </div>
+        )}
+
+        {showForm && !showResumeForm && (
+          <div className="w-full max-w-lg bg-white/5 backdrop-blur-lg p-6 rounded-lg shadow-md border border-white/10 flex flex-col justify-center items-center">
+            <CoverLetterForm
+              onGenerate={handleGenerateCoverLetter}
+              resetTrigger={resetForm}
+            />
+          </div>
+        )}
+
+        {/* Auto-scroll into view when content is generated */}
+        {resume && (
+          <div
+            className="mt-24 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-6 rounded-lg shadow-md border border-white/10 text-white"
+            id="resumeSection"
+          >
+            <h3 className="text-xl font-bold mb-2">Generated Resume</h3>
+            <pre className="whitespace-pre-wrap overflow-y-auto max-h-[600px] p-4">
+              {resume}
             </pre>
-            {/* ✅ Copy to Clipboard Button */}
+          </div>
+        )}
+
+        {coverLetter && (
+          <div
+            className="mt-24 w-full max-w-3xl bg-white/10 backdrop-blur-lg p-6 rounded-lg shadow-md border border-white/10 text-white"
+            id="coverLetterSection"
+          >
+            <h3 className="text-xl font-bold mb-2">Generated Cover Letter</h3>
+            <pre className="whitespace-pre-wrap overflow-y-auto max-h-[600px] p-4">
+              {coverLetter}
+            </pre>
+          </div>
+        )}
+
+        {/* Action Buttons (Appear Only When Resume or Cover Letter is Generated) */}
+        {(resume || coverLetter) && (
+          <div className="mt-10 w-full max-w-3xl flex justify-around items-center px-6 pb-10">
+            {/* Copy to Clipboard Button */}
             <button
-              onClick={() => copyToClipboard(coverLetter)}
-              className="mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-all"
+              onClick={() => copyToClipboard(resume || coverLetter)}
+              className="w-1/3 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl transition-all duration-300 hover:from-purple-600 hover:to-blue-500 shadow-lg text-center"
             >
-              Copy to Clipboard
-            </button>
-            {/* ✅ Download PDF Button */}
-            <button
-              onClick={() => downloadPDF(coverLetter, "Cover_Letter")}
-              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition-all"
-            >
-              Download as PDF
+              📋 Copy
             </button>
 
-            {/* ✅ Reset & Restart Button */}
+            {/* Download PDF Button */}
+            <button
+              onClick={() =>
+                downloadPDF(
+                  resume || coverLetter,
+                  resume ? "Resume" : "Cover_Letter"
+                )
+              }
+              className="w-1/3 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl transition-all duration-300 hover:from-purple-600 hover:to-blue-500 shadow-lg text-center"
+            >
+              📄 Download PDF
+            </button>
+
+            {/* Restart Button */}
             <button
               onClick={() => {
-                handleRestart(); // ✅ Clears generated resume/cover letter
-                setShowForm(true); // ✅ Shows the form again after clicking "Restart"
+                handleRestart();
+                setShowForm(true);
               }}
-              className="mt-4 px-4 py-2 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-700 transition"
+              className="w-1/3 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl transition-all duration-300 hover:from-purple-600 hover:to-blue-500 shadow-lg text-center"
             >
-              Restart
+              🔄 Restart
             </button>
           </div>
         )}
