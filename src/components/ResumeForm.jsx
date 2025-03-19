@@ -7,6 +7,7 @@ const ResumeForm = ({ onGenerate, resetTrigger }) => {
   const [experience, setExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // ✅ Reset state when resetTrigger changes
   useEffect(() => {
@@ -21,30 +22,33 @@ const ResumeForm = ({ onGenerate, resetTrigger }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    setError(null); // ✅ Clear any previous errors
+  
     const requestData = {
       prompt: `Generate a resume for a ${name} ${jobTitle} with ${experience} years of experience, skilled in ${skills}.`,
     };
-
+  
     try {
       const response = await fetch(`${API_BASE_URL}/ai/generate-resume`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
       });
-
+  
       if (!response.ok) {
-        throw new Error("Failed to generate resume");
+        throw new Error("Failed to generate resume. Please try again.");
       }
-
+  
       const data = await response.json();
-      onGenerate(data.resume || JSON.stringify(data, null, 2)); // Pass resume data to App.jsx
+      onGenerate(data.resume || JSON.stringify(data, null, 2));  
     } catch (error) {
-      console.error("Error generating resume:", error);
+      console.error("Error:", error);
+      setError(error.message); // ✅ Show user-friendly error message
     }
-
+  
     setLoading(false);
   };
+  
 
   return (
     <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md mt-6">
@@ -54,6 +58,11 @@ const ResumeForm = ({ onGenerate, resetTrigger }) => {
       <p className="text-gray-600 text-lg mb-6">
         Enter your job details below to create a professional resume.
       </p>
+      {error && (
+        <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
+          ❌ {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* ✅ Name Input */}

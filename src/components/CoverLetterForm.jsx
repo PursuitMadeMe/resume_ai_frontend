@@ -7,42 +7,39 @@ function CoverLetterForm({ onGenerate }) {
   const [applicantName, setApplicantName] = useState("");
   const [coverLetter, setCoverLetter] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // ✅ Now using "handleSubmit" for consistency
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevents page refresh
-    setLoading(true); // Show loading state
+    e.preventDefault();
+    setLoading(true);
+    setError(null); // ✅ Clear any previous errors
 
     const requestData = {
-      job_title: jobTitle, // ✅ Make sure this matches backend requirements
+      job_title: jobTitle,
       company: companyName,
       applicant_name: applicantName,
     };
-
+    
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/ai/generate-cover-letter`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/ai/generate-cover-letter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to generate cover letter");
+        throw new Error("Failed to generate resume. Please try again.");
       }
 
       const data = await response.json();
-      onGenerate(data.cover_letter || JSON.stringify(data, null, 2));
+      onGenerate(data.resume || JSON.stringify(data, null, 2));
     } catch (error) {
-      console.error("Error generating cover letter:", error);
-      // setCoverLetter("Error generating cover letter.");
+      console.error("Error:", error);
+      setError(error.message); // ✅ Show user-friendly error message
     }
 
-    setLoading(false); // Hide loading state
+    setLoading(false);
   };
 
   return (
@@ -53,6 +50,11 @@ function CoverLetterForm({ onGenerate }) {
       <p className="text-gray-600 text-lg mb-6">
         Provide your details below to generate a personalized cover letter.
       </p>
+      {error && (
+        <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-400 rounded">
+          ❌ {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Applicant Name Input */}
