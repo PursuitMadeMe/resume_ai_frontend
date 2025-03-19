@@ -104,7 +104,16 @@ function CoverLetterForm({ onGenerate }) {
           className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-bold py-3 rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-blue-900 shadow-lg"
           disabled={loading}
         >
-          {loading ? "Generating..." : "Generate Cover Letter"}
+          {loading ? (
+            <div className="flex items-center justify-center space-x-2">
+              <span className="h-3 w-3 bg-white rounded-full animate-bounce"></span>
+              <span className="h-3 w-3 bg-white rounded-full animate-bounce delay-150"></span>
+              <span className="h-3 w-3 bg-white rounded-full animate-bounce delay-300"></span>
+              <span className="ml-2 text-white font-medium">Generating...</span>
+            </div>
+          ) : (
+            "Generate Resume"
+          )}
         </button>
       </form>
     </div>
