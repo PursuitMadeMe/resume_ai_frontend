@@ -75,28 +75,31 @@ function App() {
         {/* ✅ Center Everything on Page */}
         <div className="flex flex-col items-center justify-center min-h-screen w-full">
           {/* ✅ Toggle Button for Forms */}
-          <div className="flex space-x-4 mt-4 mb-6">
-            <button
-              onClick={() => setShowResumeForm(true)}
-              className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-                showResumeForm
-                  ? "bg-blue-600 text-white"
-                  : "bg-white/20 text-gray-200"
-              }`}
-            >
-              Show Resume Form
-            </button>
-            <button
-              onClick={() => setShowResumeForm(false)}
-              className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
-                !showResumeForm
-                  ? "bg-blue-600 text-white"
-                  : "bg-white/20 text-gray-200"
-              }`}
-            >
-              Show Cover Letter Form
-            </button>
-          </div>
+          {/* ✅ Hide toggle buttons after generation */}
+          {!resume && !coverLetter && (
+            <div className="flex space-x-4 mt-4 mb-6">
+              <button
+                onClick={() => setShowResumeForm(true)}
+                className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
+                  showResumeForm
+                    ? "bg-blue-600 text-white"
+                    : "bg-white/20 text-gray-200"
+                }`}
+              >
+                Show Resume Form
+              </button>
+              <button
+                onClick={() => setShowResumeForm(false)}
+                className={`px-6 py-2 text-lg font-bold rounded-lg transition-all duration-300 ${
+                  !showResumeForm
+                    ? "bg-blue-600 text-white"
+                    : "bg-white/20 text-gray-200"
+                }`}
+              >
+                Show Cover Letter Form
+              </button>
+            </div>
+          )}
 
           {/* ✅ Show Resume Form If Selected */}
           {showForm && showResumeForm && (

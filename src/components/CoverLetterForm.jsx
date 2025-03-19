@@ -33,7 +33,7 @@ function CoverLetterForm({ onGenerate }) {
       }
 
       const data = await response.json();
-      onGenerate(data.resume || JSON.stringify(data, null, 2));
+      onGenerate(data.cover_letter || JSON.stringify(data, null, 2));
     } catch (error) {
       console.error("Error:", error);
       setError(error.message); // ✅ Show user-friendly error message
@@ -114,7 +114,7 @@ function CoverLetterForm({ onGenerate }) {
               <span className="ml-2 text-white font-medium">Generating...</span>
             </div>
           ) : (
-            "Generate Resume"
+            "Generate Cover Letter"
           )}
         </button>
       </form>
